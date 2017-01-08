@@ -125,6 +125,8 @@ print 'Selected features score:'
 print scores
 
 features_list = ['poi'] + new_features_list
+new_features_list.remove('poi_from_percent')
+features_list_without_create_feature = ['poi'] + new_features_list
 
 ### Task 5: Tune your classifier to achieve better than .3 precision and recall 
 ### using our testing script. Check the tester.py script in the final project
@@ -154,7 +156,13 @@ print("DecisionTree fitting: %r" % round(time()-t0, 3))
 dt = grid_obj.best_estimator_
 ## Print the parameters
 print dt.get_params(), '\n'
+
+print 'Result of feature_list without new create feature:'
+test_classifier(dt, my_dataset, features_list_without_create_feature, folds = 100)
+
+print 'Result of feature_list with new create feature:'
 test_classifier(dt, my_dataset, features_list, folds = 100)
+
 
 clf = dt
 ### Task 6: Dump your classifier, dataset, and features_list so anyone can
